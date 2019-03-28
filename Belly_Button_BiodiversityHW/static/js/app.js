@@ -37,7 +37,7 @@ function buildMetadata(sample) {
         endPath = ' Z';
     var path = mainPath.concat(xPath, space, yPath, endPath);
 
-    var data = [{ type: 'scatter',
+    var scatter_data = [{ type: 'scatter',
       x: [0], y:[0],
         marker: {size: 1, color:'850000'},
         showlegend: false,
@@ -78,7 +78,7 @@ function buildMetadata(sample) {
       yaxis: {zeroline:false, showticklabels:false,
                 showgrid: false, range: [-1, 1]}
     };
-    Plotly.newPlot('gauge', data, layout);
+    Plotly.newPlot('gauge', scatter_data, layout);
   })
 }
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -97,30 +97,30 @@ function buildCharts(sample) {
         color: data.otu_ids
       }
     };
-    var bubbleArray = [bubble_trace];
-    Plotly.newPlot('bubble', bubbleArray);
+    var bubble_array = [bubble_trace];
+    Plotly.newPlot('bubble', bubble_array);
 
   // @TODO: Build a Pie Chart
   // HINT: You will need to use slice() to grab the top 10 sample_values,
   // otu_ids, and labels (10 each).
-    var pieData = [{
+    var pie_data = [{
       "values": data.sample_values.slice(0,10),
       "labels": data.otu_ids.slice(0,10),
       hovertext: data.otu_labels.slice(0,10),
       type: 'pie'
     }];
-    Plotly.newPlot('pie', pieData);
+    Plotly.newPlot('pie', pie_data);
   });
 }
 
 function init() {
   // Grab a reference to the dropdown select element
-  var selector = d3.select("#selDataset");
+  var selDataset = d3.select("#selDataset");
 
   // Use the list of sample names to populate the select options
   d3.json("/names").then((sampleNames) => {
     sampleNames.forEach((sample) => {
-      selector
+      selDataset
         .append("option")
         .text(sample)
         .property("value", sample);
